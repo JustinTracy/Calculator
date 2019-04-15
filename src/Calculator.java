@@ -35,7 +35,7 @@ public class Calculator extends JFrame
     JButton switchSigns;
 
     JButton blank;
-    JButton blank2;
+    JButton carrot;
 
     private static boolean firstNum = true;
     private static boolean adding = false;
@@ -43,7 +43,7 @@ public class Calculator extends JFrame
     private static boolean multiplying = false;
     private static boolean dividing = false;
 
-    private static int finalNum = 0;
+    private static double finalNum = 0;
     private static String secondNum = "";
 
     public Calculator()
@@ -74,7 +74,7 @@ public class Calculator extends JFrame
         blank = new JButton("");
         blank.addActionListener((ActionEvent ae) ->
         {
-
+            System.out.println("Second Number: " + secondNum);
         });
         buttonPnl.add(blank);
 
@@ -99,17 +99,18 @@ public class Calculator extends JFrame
         });
         buttonPnl.add(inverse);
 
-        blank2 = new JButton("");
-        blank2.addActionListener((ActionEvent ae) ->
+        carrot = new JButton("^");
+        carrot.addActionListener((ActionEvent ae) ->
         {
 
         });
-        buttonPnl.add(blank2);
+        buttonPnl.add(carrot);
 
         clear = new JButton("Clear");
         clear.addActionListener((ActionEvent ae) ->
         {
-
+            reset();
+            displayTextArea.setText("");
         });
         buttonPnl.add(clear);
 
@@ -256,7 +257,15 @@ public class Calculator extends JFrame
         decimal = new JButton(".");
         decimal.addActionListener((ActionEvent ae) ->
         {
-
+            if (firstNum)
+            {
+                displayTextArea.append(".");
+            }
+            else
+            {
+                otherDisplay.append(".");
+                secondNum = secondNum + ".";
+            }
         });
         buttonPnl.add(decimal);
 
@@ -265,29 +274,27 @@ public class Calculator extends JFrame
         {
             if (adding)
             {
-                finalNum = Integer.parseInt(displayTextArea.getText()) + Integer.parseInt(secondNum);
+                finalNum = Double.parseDouble(displayTextArea.getText()) + Double.parseDouble(secondNum);
                 displayTextArea.setText(String.valueOf(finalNum));
             }
             if (subtracting)
             {
-                finalNum = Integer.parseInt(displayTextArea.getText()) - Integer.parseInt(secondNum);
+                finalNum = Double.parseDouble(displayTextArea.getText()) - Double.parseDouble(secondNum);
                 displayTextArea.setText(String.valueOf(finalNum));
             }
             if (multiplying)
             {
-                finalNum = Integer.parseInt(displayTextArea.getText()) * Integer.parseInt(secondNum);
+                finalNum = Double.parseDouble(displayTextArea.getText()) * Double.parseDouble(secondNum);
                 displayTextArea.setText(String.valueOf(finalNum));
             }
             if (dividing)
             {
-                finalNum = Integer.parseInt(displayTextArea.getText()) / Integer.parseInt(secondNum);
+                finalNum = Double.parseDouble(displayTextArea.getText()) / Double.parseDouble(secondNum);
                 displayTextArea.setText(String.valueOf(finalNum));
             }
             reset();
         });
         buttonPnl.add(equals);
-
-
 
         main.add(buttonPnl, BorderLayout.CENTER);
         setSize(325, 535);
