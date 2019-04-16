@@ -42,9 +42,16 @@ public class Calculator extends JFrame
     private static boolean subtracting = false;
     private static boolean multiplying = false;
     private static boolean dividing = false;
+    private static boolean carroting = false;
 
     private static double finalNum = 0;
     private static String secondNum = "";
+    private static int secondNumLength = 0;
+
+    private static double squared = 0;
+    private static double squarerooted = 0;
+    private static double carrotted = 0;
+
 
     public Calculator()
     {
@@ -74,7 +81,7 @@ public class Calculator extends JFrame
         blank = new JButton("");
         blank.addActionListener((ActionEvent ae) ->
         {
-            System.out.println("Second Number: " + secondNum);
+            System.out.println("Squared: " + squared);
         });
         buttonPnl.add(blank);
 
@@ -88,7 +95,25 @@ public class Calculator extends JFrame
         square = new JButton("x^2");
         square.addActionListener((ActionEvent ae) ->
         {
+            if (firstNum)
+            {
+                squared = Double.parseDouble(displayTextArea.getText());
+                squared = squared * squared;
+                displayTextArea.setText(String.valueOf(squared));
+            }
+            else
+            {
+                squared = Double.parseDouble(secondNum);
+                squared = squared * squared;
+                secondNumLength = secondNum.length();
+                secondNum = String.valueOf(squared);
 
+                String current3 = otherDisplay.getText();
+                current3 = current3.substring(0,current3.length() - secondNumLength);
+                otherDisplay.setText(current3);
+
+                otherDisplay.append(String.valueOf(squared));
+            }
         });
         buttonPnl.add(square);
 
@@ -328,5 +353,10 @@ public class Calculator extends JFrame
         secondNum = "";
 
         otherDisplay.setText("");
+
+        squared = 0;
+        squarerooted = 0;
+        carrotted = 0;
+        secondNumLength = 0;
     }
 }
