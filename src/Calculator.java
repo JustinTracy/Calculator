@@ -91,7 +91,25 @@ public class Calculator extends JFrame
         squareRoot = new JButton("√");
         squareRoot.addActionListener((ActionEvent ae) ->
         {
+            if (firstNum)
+            {
+                squarerooted = Double.parseDouble(displayTextArea.getText());
+                squarerooted = Math.sqrt(squarerooted);
+                displayTextArea.setText(String.valueOf(squarerooted));
+            }
+            else
+            {
+                squarerooted = Double.parseDouble(secondNum);
+                squarerooted = Math.sqrt(squarerooted);
+                secondNumLength = secondNum.length();
+                secondNum = String.valueOf(squarerooted);
 
+                String current5 = otherDisplay.getText();
+                current5 = current5.substring(0,current5.length() - secondNumLength);
+                otherDisplay.setText(current5);
+
+                otherDisplay.append(String.valueOf(squarerooted));
+            }
         });
         buttonPnl.add(squareRoot);
 
