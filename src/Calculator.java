@@ -49,8 +49,11 @@ public class Calculator extends JFrame
     private static int secondNumLength = 0;
 
     private static double squared = 0;
+    private static double inversed = 0;
     private static double squarerooted = 0;
     private static double carrotted = 0;
+
+    private static int counter = 0;
 
 
     public Calculator()
@@ -81,7 +84,7 @@ public class Calculator extends JFrame
         blank = new JButton("");
         blank.addActionListener((ActionEvent ae) ->
         {
-            System.out.println("Squared: " + squared);
+            System.out.println("Counter: " + counter);
         });
         buttonPnl.add(blank);
 
@@ -120,7 +123,25 @@ public class Calculator extends JFrame
         inverse = new JButton("1/x");
         inverse.addActionListener((ActionEvent ae) ->
         {
+            if (firstNum)
+            {
+                inversed = Double.parseDouble(displayTextArea.getText());
+                inversed = 1 / inversed;
+                displayTextArea.setText(String.valueOf(inversed));
+            }
+            else
+            {
+                inversed = Double.parseDouble(secondNum);
+                inversed = 1 / inversed;
+                secondNumLength = secondNum.length();
+                secondNum = String.valueOf(inversed);
 
+                String current4 = otherDisplay.getText();
+                current4 = current4.substring(0,current4.length() - secondNumLength);
+                otherDisplay.setText(current4);
+
+                otherDisplay.append(String.valueOf(inversed));
+            }
         });
         buttonPnl.add(inverse);
 
@@ -169,9 +190,20 @@ public class Calculator extends JFrame
         divide = new JButton("/");
         divide.addActionListener((ActionEvent ae) ->
         {
-            dividing = true;
-            firstNum = false;
-            otherDisplay.append("  /  ");
+            counter++;
+            if (counter > 1)
+            {
+                getAnswer();
+                dividing = true;
+                firstNum = false;
+                otherDisplay.append("  /  ");
+            }
+            else
+            {
+                dividing = true;
+                firstNum = false;
+                otherDisplay.append("  /  ");
+            }
         });
         buttonPnl.add(divide);
 
@@ -199,9 +231,20 @@ public class Calculator extends JFrame
         multiply = new JButton("*");
         multiply.addActionListener((ActionEvent ae) ->
         {
-            multiplying = true;
-            firstNum = false;
-            otherDisplay.append("  *  ");
+            counter++;
+            if (counter > 1)
+            {
+                getAnswer();
+                multiplying = true;
+                firstNum = false;
+                otherDisplay.append("  *  ");
+            }
+            else
+            {
+                multiplying = true;
+                firstNum = false;
+                otherDisplay.append("  *  ");
+            }
         });
         buttonPnl.add(multiply);
 
@@ -229,9 +272,20 @@ public class Calculator extends JFrame
         minus = new JButton("-");
         minus.addActionListener((ActionEvent ae) ->
         {
-            subtracting = true;
-            firstNum = false;
-            otherDisplay.append("  -  ");
+            counter++;
+            if (counter > 1)
+            {
+                getAnswer();
+                subtracting = true;
+                firstNum = false;
+                otherDisplay.append("  -  ");
+            }
+            else
+            {
+                subtracting = true;
+                firstNum = false;
+                otherDisplay.append("  -  ");
+            }
         });
         buttonPnl.add(minus);
 
@@ -259,9 +313,20 @@ public class Calculator extends JFrame
         plus = new JButton("+");
         plus.addActionListener((ActionEvent ae) ->
         {
-            adding = true;
-            firstNum = false;
-            otherDisplay.append("  +  ");
+            counter++;
+            if (counter > 1)
+            {
+                getAnswer();
+                adding = true;
+                firstNum = false;
+                otherDisplay.append("  +  ");
+            }
+            else
+            {
+                adding = true;
+                firstNum = false;
+                otherDisplay.append("  +  ");
+            }
         });
         buttonPnl.add(plus);
 
@@ -297,27 +362,7 @@ public class Calculator extends JFrame
         equals = new JButton("=");
         equals.addActionListener((ActionEvent ae) ->
         {
-            if (adding)
-            {
-                finalNum = Double.parseDouble(displayTextArea.getText()) + Double.parseDouble(secondNum);
-                displayTextArea.setText(String.valueOf(finalNum));
-            }
-            if (subtracting)
-            {
-                finalNum = Double.parseDouble(displayTextArea.getText()) - Double.parseDouble(secondNum);
-                displayTextArea.setText(String.valueOf(finalNum));
-            }
-            if (multiplying)
-            {
-                finalNum = Double.parseDouble(displayTextArea.getText()) * Double.parseDouble(secondNum);
-                displayTextArea.setText(String.valueOf(finalNum));
-            }
-            if (dividing)
-            {
-                finalNum = Double.parseDouble(displayTextArea.getText()) / Double.parseDouble(secondNum);
-                displayTextArea.setText(String.valueOf(finalNum));
-            }
-            reset();
+            getAnswer();
         });
         buttonPnl.add(equals);
 
@@ -327,6 +372,31 @@ public class Calculator extends JFrame
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(main);
+    }
+
+    public static void getAnswer()
+    {
+        if (adding)
+        {
+            finalNum = Double.parseDouble(displayTextArea.getText()) + Double.parseDouble(secondNum);
+            displayTextArea.setText(String.valueOf(finalNum));
+        }
+        if (subtracting)
+        {
+            finalNum = Double.parseDouble(displayTextArea.getText()) - Double.parseDouble(secondNum);
+            displayTextArea.setText(String.valueOf(finalNum));
+        }
+        if (multiplying)
+        {
+            finalNum = Double.parseDouble(displayTextArea.getText()) * Double.parseDouble(secondNum);
+            displayTextArea.setText(String.valueOf(finalNum));
+        }
+        if (dividing)
+        {
+            finalNum = Double.parseDouble(displayTextArea.getText()) / Double.parseDouble(secondNum);
+            displayTextArea.setText(String.valueOf(finalNum));
+        }
+        reset();
     }
 
     public static void setButtonNumber(int num)
