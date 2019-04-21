@@ -56,6 +56,8 @@ public class Calculator extends JFrame
     private static double squarerooted = 0;
     private static String carrotted = "";
     private static double switchedNum = 0;
+    private static double roundedNum = 0;
+    private static String scientificNotation = "";
 
     private static int counter = 0;
 
@@ -68,9 +70,12 @@ public class Calculator extends JFrame
     Color otherColor = new Color(23, 99, 59);
     Color textColor = new Color(1, 1, 1);
 
+    ImageIcon icon = new ImageIcon("assets/icon.png");
+
     public Calculator()
     {
         super("Calculator");
+        setIconImage(icon.getImage());
         main = new JPanel();
         main.setLayout(new BorderLayout());
 
@@ -101,7 +106,7 @@ public class Calculator extends JFrame
         blank.setForeground(textColor);
         blank.addActionListener((ActionEvent ae) ->
         {
-            System.out.println(counter);
+
         });
         buttonPnl.add(blank);
 
@@ -136,9 +141,9 @@ public class Calculator extends JFrame
                         secondNumLength = secondNum.length();
                         secondNum = String.valueOf(squarerooted);
 
-                        String current5 = otherDisplay.getText();
-                        current5 = current5.substring(0, current5.length() - secondNumLength);
-                        otherDisplay.setText(current5);
+                        String current = otherDisplay.getText();
+                        current = current.substring(0, current.length() - secondNumLength);
+                        otherDisplay.setText(current);
 
                         otherDisplay.append(String.valueOf(squarerooted));
                     }
@@ -180,9 +185,9 @@ public class Calculator extends JFrame
                     secondNumLength = secondNum.length();
                     secondNum = String.valueOf(squared);
 
-                    String current3 = otherDisplay.getText();
-                    current3 = current3.substring(0,current3.length() - secondNumLength);
-                    otherDisplay.setText(current3);
+                    String current = otherDisplay.getText();
+                    current = current.substring(0,current.length() - secondNumLength);
+                    otherDisplay.setText(current);
 
                     otherDisplay.append(String.valueOf(squared));
                 }
@@ -223,9 +228,9 @@ public class Calculator extends JFrame
                     secondNumLength = secondNum.length();
                     secondNum = String.valueOf(inversed);
 
-                    String current4 = otherDisplay.getText();
-                    current4 = current4.substring(0,current4.length() - secondNumLength);
-                    otherDisplay.setText(current4);
+                    String current = otherDisplay.getText();
+                    current = current.substring(0,current.length() - secondNumLength);
+                    otherDisplay.setText(current);
 
                     otherDisplay.append(String.valueOf(inversed));
                 }
@@ -332,9 +337,9 @@ public class Calculator extends JFrame
                     }
                     else
                     {
-                        String current2 = otherDisplay.getText();
-                        current2 = current2.substring(0,current2.length() - 1);
-                        otherDisplay.setText(current2);
+                        String current = otherDisplay.getText();
+                        current = current.substring(0,current.length() - 1);
+                        otherDisplay.setText(current);
 
                         secondNum = secondNum.substring(0,secondNum.length() - 1);
                     }
@@ -803,6 +808,14 @@ public class Calculator extends JFrame
                 displayTextArea.setText(String.valueOf(finalNum));
             }
         }
+        if (displayTextArea.getText().length() > 16)
+        {
+            scientificNotation = displayTextArea.getText().substring(displayTextArea.getText().length() - 6);
+            String current = displayTextArea.getText();
+            current = current.substring(0, current.length() - (displayTextArea.getText().length() - 10));
+            current = current + scientificNotation;
+            displayTextArea.setText(current);
+        }
         reset();
     }
 
@@ -866,5 +879,7 @@ public class Calculator extends JFrame
         carrotted = "";
         secondNumLength = 0;
         switchedNum = 0;
+        roundedNum = 0;
+        scientificNotation = "";
     }
 }
