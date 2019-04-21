@@ -45,6 +45,7 @@ public class Calculator extends JFrame
     private static boolean multiplying = false;
     private static boolean dividing = false;
     private static boolean carroting = false;
+    private static boolean error = false;
 
     private static double finalNum = 0;
     private static String secondNum = "";
@@ -54,7 +55,7 @@ public class Calculator extends JFrame
     private static double inversed = 0;
     private static double squarerooted = 0;
     private static String carrotted = "";
-    double switchedNum = 0;
+    private static double switchedNum = 0;
 
     private static int counter = 0;
 
@@ -77,6 +78,7 @@ public class Calculator extends JFrame
         displayPnl.setLayout(new GridLayout(0, 1));
         otherDisplay = new JTextArea();
         otherDisplay.setEditable(false);
+        otherDisplay.setBorder(border);
         otherDisplay.setFont(new Font("Arial", Font.PLAIN, 24));
         otherDisplay.setPreferredSize(new Dimension(100, 25));
         otherDisplay.setBackground(Color.LIGHT_GRAY);
@@ -99,7 +101,7 @@ public class Calculator extends JFrame
         blank.setForeground(textColor);
         blank.addActionListener((ActionEvent ae) ->
         {
-
+            System.out.println(counter);
         });
         buttonPnl.add(blank);
 
@@ -110,27 +112,41 @@ public class Calculator extends JFrame
         squareRoot.setForeground(textColor);
         squareRoot.addActionListener((ActionEvent ae) ->
         {
-            if (!displayTextArea.getText().equals(""))
+            if (error)
             {
-                if (firstNum)
+                error = false;
+                displayTextArea.setText("");
+                otherDisplay.setText("");
+                reset();
+            }
+            try
+            {
+                if (!displayTextArea.getText().equals(""))
                 {
-                    squarerooted = Double.parseDouble(displayTextArea.getText());
-                    squarerooted = Math.sqrt(squarerooted);
-                    displayTextArea.setText(String.valueOf(squarerooted));
-                }
-                else
-                {
-                    squarerooted = Double.parseDouble(secondNum);
-                    squarerooted = Math.sqrt(squarerooted);
-                    secondNumLength = secondNum.length();
-                    secondNum = String.valueOf(squarerooted);
+                    if (firstNum)
+                    {
+                        squarerooted = Double.parseDouble(displayTextArea.getText());
+                        squarerooted = Math.sqrt(squarerooted);
+                        displayTextArea.setText(String.valueOf(squarerooted));
+                    }
+                    else
+                    {
+                        squarerooted = Double.parseDouble(secondNum);
+                        squarerooted = Math.sqrt(squarerooted);
+                        secondNumLength = secondNum.length();
+                        secondNum = String.valueOf(squarerooted);
 
-                    String current5 = otherDisplay.getText();
-                    current5 = current5.substring(0,current5.length() - secondNumLength);
-                    otherDisplay.setText(current5);
+                        String current5 = otherDisplay.getText();
+                        current5 = current5.substring(0, current5.length() - secondNumLength);
+                        otherDisplay.setText(current5);
 
-                    otherDisplay.append(String.valueOf(squarerooted));
+                        otherDisplay.append(String.valueOf(squarerooted));
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                error();
             }
         });
         buttonPnl.add(squareRoot);
@@ -142,24 +158,38 @@ public class Calculator extends JFrame
         square.setForeground(textColor);
         square.addActionListener((ActionEvent ae) ->
         {
-            if (firstNum)
+            if (error)
             {
-                squared = Double.parseDouble(displayTextArea.getText());
-                squared = squared * squared;
-                displayTextArea.setText(String.valueOf(squared));
+                error = false;
+                displayTextArea.setText("");
+                otherDisplay.setText("");
+                reset();
             }
-            else
+            try
             {
-                squared = Double.parseDouble(secondNum);
-                squared = squared * squared;
-                secondNumLength = secondNum.length();
-                secondNum = String.valueOf(squared);
+                if (firstNum)
+                {
+                    squared = Double.parseDouble(displayTextArea.getText());
+                    squared = squared * squared;
+                    displayTextArea.setText(String.valueOf(squared));
+                }
+                else
+                {
+                    squared = Double.parseDouble(secondNum);
+                    squared = squared * squared;
+                    secondNumLength = secondNum.length();
+                    secondNum = String.valueOf(squared);
 
-                String current3 = otherDisplay.getText();
-                current3 = current3.substring(0,current3.length() - secondNumLength);
-                otherDisplay.setText(current3);
+                    String current3 = otherDisplay.getText();
+                    current3 = current3.substring(0,current3.length() - secondNumLength);
+                    otherDisplay.setText(current3);
 
-                otherDisplay.append(String.valueOf(squared));
+                    otherDisplay.append(String.valueOf(squared));
+                }
+            }
+            catch (Exception e)
+            {
+                error();
             }
         });
         buttonPnl.add(square);
@@ -171,24 +201,38 @@ public class Calculator extends JFrame
         inverse.setForeground(textColor);
         inverse.addActionListener((ActionEvent ae) ->
         {
-            if (firstNum)
+            if (error)
             {
-                inversed = Double.parseDouble(displayTextArea.getText());
-                inversed = 1 / inversed;
-                displayTextArea.setText(String.valueOf(inversed));
+                error = false;
+                displayTextArea.setText("");
+                otherDisplay.setText("");
+                reset();
             }
-            else
+            try
             {
-                inversed = Double.parseDouble(secondNum);
-                inversed = 1 / inversed;
-                secondNumLength = secondNum.length();
-                secondNum = String.valueOf(inversed);
+                if (firstNum)
+                {
+                    inversed = Double.parseDouble(displayTextArea.getText());
+                    inversed = 1 / inversed;
+                    displayTextArea.setText(String.valueOf(inversed));
+                }
+                else
+                {
+                    inversed = Double.parseDouble(secondNum);
+                    inversed = 1 / inversed;
+                    secondNumLength = secondNum.length();
+                    secondNum = String.valueOf(inversed);
 
-                String current4 = otherDisplay.getText();
-                current4 = current4.substring(0,current4.length() - secondNumLength);
-                otherDisplay.setText(current4);
+                    String current4 = otherDisplay.getText();
+                    current4 = current4.substring(0,current4.length() - secondNumLength);
+                    otherDisplay.setText(current4);
 
-                otherDisplay.append(String.valueOf(inversed));
+                    otherDisplay.append(String.valueOf(inversed));
+                }
+            }
+            catch (Exception e)
+            {
+                error();
             }
         });
         buttonPnl.add(inverse);
@@ -200,16 +244,30 @@ public class Calculator extends JFrame
         carrot.setForeground(textColor);
         carrot.addActionListener((ActionEvent ae) ->
         {
-            if (firstNum)
+            if (error)
             {
-                carroting = true;
-                otherDisplay.append("^");
-                firstNum = false;
+                error = false;
+                displayTextArea.setText("");
+                otherDisplay.setText("");
+                reset();
             }
-            else
+            try
             {
-                carroting = true;
-                otherDisplay.append("^");
+                if (firstNum)
+                {
+                    carroting = true;
+                    otherDisplay.append("^");
+                    firstNum = false;
+                }
+                else
+                {
+                    carroting = true;
+                    otherDisplay.append("^");
+                }
+            }
+            catch (Exception e)
+            {
+                error();
             }
         });
         buttonPnl.add(carrot);
@@ -221,8 +279,22 @@ public class Calculator extends JFrame
         clear.setForeground(textColor);
         clear.addActionListener((ActionEvent ae) ->
         {
-            reset();
-            displayTextArea.setText("");
+            if (error)
+            {
+                error = false;
+                displayTextArea.setText("");
+                otherDisplay.setText("");
+                reset();
+            }
+            try
+            {
+                reset();
+                displayTextArea.setText("");
+            }
+            catch (Exception e)
+            {
+                error();
+            }
         });
         buttonPnl.add(clear);
 
@@ -233,30 +305,48 @@ public class Calculator extends JFrame
         backspace.setForeground(textColor);
         backspace.addActionListener((ActionEvent ae) ->
         {
+            if (error)
+            {
+                error = false;
+                displayTextArea.setText("");
+                otherDisplay.setText("");
+                reset();
+            }
             try
             {
-                if (carroting)
+                try
                 {
-                    carrotted = carrotted.substring(0,carrotted.length() - 1);
-                }
-                if (firstNum)
-                {
-                    String current = displayTextArea.getText();
-                    current = current.substring(0,current.length() - 1);
-                    displayTextArea.setText(current);
-                }
-                else
-                {
-                    String current2 = otherDisplay.getText();
-                    current2 = current2.substring(0,current2.length() - 1);
-                    otherDisplay.setText(current2);
+                    if (adding)
+                    {
 
-                    secondNum = secondNum.substring(0,secondNum.length() - 1);
+                    }
+                    if (carroting)
+                    {
+                        carrotted = carrotted.substring(0,carrotted.length() - 1);
+                    }
+                    if (firstNum)
+                    {
+                        String current = displayTextArea.getText();
+                        current = current.substring(0,current.length() - 1);
+                        displayTextArea.setText(current);
+                    }
+                    else
+                    {
+                        String current2 = otherDisplay.getText();
+                        current2 = current2.substring(0,current2.length() - 1);
+                        otherDisplay.setText(current2);
+
+                        secondNum = secondNum.substring(0,secondNum.length() - 1);
+                    }
+                }
+                catch (Exception e)
+                {
+
                 }
             }
             catch (Exception e)
             {
-
+                error();
             }
         });
         buttonPnl.add(backspace);
@@ -268,19 +358,33 @@ public class Calculator extends JFrame
         divide.setForeground(textColor);
         divide.addActionListener((ActionEvent ae) ->
         {
-            counter++;
-            if (counter > 1)
+            if (error)
             {
-                getAnswer();
-                dividing = true;
-                firstNum = false;
-                otherDisplay.append("  /  ");
+                error = false;
+                displayTextArea.setText("");
+                otherDisplay.setText("");
+                reset();
             }
-            else
+            try
             {
-                dividing = true;
-                firstNum = false;
-                otherDisplay.append("  /  ");
+                counter++;
+                if (counter > 1)
+                {
+                    getAnswer();
+                    dividing = true;
+                    firstNum = false;
+                    otherDisplay.append("  /  ");
+                }
+                else
+                {
+                    dividing = true;
+                    firstNum = false;
+                    otherDisplay.append("  /  ");
+                }
+            }
+            catch (Exception e)
+            {
+                error();
             }
         });
         buttonPnl.add(divide);
@@ -328,19 +432,33 @@ public class Calculator extends JFrame
         multiply.setForeground(textColor);
         multiply.addActionListener((ActionEvent ae) ->
         {
-            counter++;
-            if (counter > 1)
+            if (error)
             {
-                getAnswer();
-                multiplying = true;
-                firstNum = false;
-                otherDisplay.append("  *  ");
+                error = false;
+                displayTextArea.setText("");
+                otherDisplay.setText("");
+                reset();
             }
-            else
+            try
             {
-                multiplying = true;
-                firstNum = false;
-                otherDisplay.append("  *  ");
+                counter++;
+                if (counter > 1)
+                {
+                    getAnswer();
+                    multiplying = true;
+                    firstNum = false;
+                    otherDisplay.append("  *  ");
+                }
+                else
+                {
+                    multiplying = true;
+                    firstNum = false;
+                    otherDisplay.append("  *  ");
+                }
+            }
+            catch (Exception e)
+            {
+                error();
             }
         });
         buttonPnl.add(multiply);
@@ -388,19 +506,33 @@ public class Calculator extends JFrame
         minus.setForeground(textColor);
         minus.addActionListener((ActionEvent ae) ->
         {
-            counter++;
-            if (counter > 1)
+            if (error)
             {
-                getAnswer();
-                subtracting = true;
-                firstNum = false;
-                otherDisplay.append("  -  ");
+                error = false;
+                displayTextArea.setText("");
+                otherDisplay.setText("");
+                reset();
             }
-            else
+            try
             {
-                subtracting = true;
-                firstNum = false;
-                otherDisplay.append("  -  ");
+                counter++;
+                if (counter > 1)
+                {
+                    getAnswer();
+                    subtracting = true;
+                    firstNum = false;
+                    otherDisplay.append("  -  ");
+                }
+                else
+                {
+                    subtracting = true;
+                    firstNum = false;
+                    otherDisplay.append("  -  ");
+                }
+            }
+            catch (Exception e)
+            {
+                error();
             }
         });
         buttonPnl.add(minus);
@@ -448,19 +580,33 @@ public class Calculator extends JFrame
         plus.setForeground(textColor);
         plus.addActionListener((ActionEvent ae) ->
         {
-            counter++;
-            if (counter > 1)
+            if (error)
             {
-                getAnswer();
-                adding = true;
-                firstNum = false;
-                otherDisplay.append("  +  ");
+                error = false;
+                displayTextArea.setText("");
+                otherDisplay.setText("");
+                reset();
             }
-            else
+            try
             {
-                adding = true;
-                firstNum = false;
-                otherDisplay.append("  +  ");
+                counter++;
+                if (counter > 1)
+                {
+                    getAnswer();
+                    adding = true;
+                    firstNum = false;
+                    otherDisplay.append("  +  ");
+                }
+                else
+                {
+                    adding = true;
+                    firstNum = false;
+                    otherDisplay.append("  +  ");
+                }
+            }
+            catch (Exception e)
+            {
+                error();
             }
         });
         buttonPnl.add(plus);
@@ -472,28 +618,42 @@ public class Calculator extends JFrame
         switchSigns.setForeground(textColor);
         switchSigns.addActionListener((ActionEvent ae) ->
         {
-            if (firstNum)
+            if (error)
             {
-                if (!displayTextArea.getText().equals(""))
+                error = false;
+                displayTextArea.setText("");
+                otherDisplay.setText("");
+                reset();
+            }
+            try
+            {
+                if (firstNum)
                 {
-                    switchedNum = Double.parseDouble(displayTextArea.getText());
-                    switchedNum = -switchedNum;
-                    displayTextArea.setText(String.valueOf(switchedNum));
+                    if (!displayTextArea.getText().equals(""))
+                    {
+                        switchedNum = Double.parseDouble(displayTextArea.getText());
+                        switchedNum = -switchedNum;
+                        displayTextArea.setText(String.valueOf(switchedNum));
+                    }
+                }
+                else
+                {
+                    if (!secondNum.equals(""))
+                    {
+                        switchedNum = Double.parseDouble(secondNum);
+                        switchedNum = -switchedNum;
+                        secondNum = String.valueOf(switchedNum);
+
+                        String current9 = otherDisplay.getText();
+                        current9 = current9.substring(0,current9.length() - secondNum.length());
+                        otherDisplay.setText(current9);
+                        otherDisplay.append(String.valueOf(switchedNum));
+                    }
                 }
             }
-            else
+            catch (Exception e)
             {
-                if (!secondNum.equals(""))
-                {
-                    switchedNum = Double.parseDouble(secondNum);
-                    switchedNum = -switchedNum;
-                    secondNum = String.valueOf(switchedNum);
-
-                    String current9 = otherDisplay.getText();
-                    current9 = current9.substring(0,current9.length() - secondNum.length());
-                    otherDisplay.setText(current9);
-                    otherDisplay.append(String.valueOf(switchedNum));
-                }
+                error();
             }
         });
         buttonPnl.add(switchSigns);
@@ -517,14 +677,28 @@ public class Calculator extends JFrame
         decimal.setForeground(textColor);
         decimal.addActionListener((ActionEvent ae) ->
         {
-            if (firstNum)
+            if (error)
             {
-                displayTextArea.append(".");
+                error = false;
+                displayTextArea.setText("");
+                otherDisplay.setText("");
+                reset();
             }
-            else
+            try
             {
-                otherDisplay.append(".");
-                secondNum = secondNum + ".";
+                if (firstNum)
+                {
+                    displayTextArea.append(".");
+                }
+                else
+                {
+                    otherDisplay.append(".");
+                    secondNum = secondNum + ".";
+                }
+            }
+            catch (Exception e)
+            {
+                error();
             }
         });
         buttonPnl.add(decimal);
@@ -536,7 +710,21 @@ public class Calculator extends JFrame
         equals.setForeground(textColor);
         equals.addActionListener((ActionEvent ae) ->
         {
-            getAnswer();
+            if (error)
+            {
+                error = false;
+                displayTextArea.setText("");
+                otherDisplay.setText("");
+                reset();
+            }
+            try
+            {
+                getAnswer();
+            }
+            catch (Exception e)
+            {
+                error();
+            }
         });
         buttonPnl.add(equals);
 
@@ -620,26 +808,48 @@ public class Calculator extends JFrame
 
     public static void setButtonNumber(int num)
     {
-        if (firstNum)
+        if (error)
         {
-            displayTextArea.append(String.valueOf(num));
+            error = false;
+            displayTextArea.setText("");
+            otherDisplay.setText("");
+            reset();
         }
-        else
+        try
         {
-            if (carroting)
+            if (firstNum)
             {
-                otherDisplay.append(String.valueOf(num));
-                carrotted = carrotted + num;
+                displayTextArea.append(String.valueOf(num));
             }
             else
             {
-                otherDisplay.append(String.valueOf(num));
-                secondNum = secondNum + num;
+                if (carroting)
+                {
+                    otherDisplay.append(String.valueOf(num));
+                    carrotted = carrotted + num;
+                }
+                else
+                {
+                    otherDisplay.append(String.valueOf(num));
+                    secondNum = secondNum + num;
+                }
             }
+        }
+        catch (Exception e)
+        {
+            error();
         }
     }
 
-    public void reset()
+    public static void error()
+    {
+        error = true;
+        otherDisplay.setText("");
+        displayTextArea.setText("Error");
+    }
+
+
+    public static void reset()
     {
         adding = false;
         subtracting = false;
