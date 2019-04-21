@@ -52,6 +52,7 @@ public class Calculator extends JFrame
     private static double inversed = 0;
     private static double squarerooted = 0;
     private static double carrotted = 0;
+    double switchedNum = 0;
 
     private static int counter = 0;
 
@@ -84,31 +85,34 @@ public class Calculator extends JFrame
         blank = new JButton("");
         blank.addActionListener((ActionEvent ae) ->
         {
-            System.out.println("Counter: " + counter);
+            System.out.println("SecondNum: " + secondNum);
         });
         buttonPnl.add(blank);
 
         squareRoot = new JButton("√");
         squareRoot.addActionListener((ActionEvent ae) ->
         {
-            if (firstNum)
+            if (!displayTextArea.getText().equals(""))
             {
-                squarerooted = Double.parseDouble(displayTextArea.getText());
-                squarerooted = Math.sqrt(squarerooted);
-                displayTextArea.setText(String.valueOf(squarerooted));
-            }
-            else
-            {
-                squarerooted = Double.parseDouble(secondNum);
-                squarerooted = Math.sqrt(squarerooted);
-                secondNumLength = secondNum.length();
-                secondNum = String.valueOf(squarerooted);
+                if (firstNum)
+                {
+                    squarerooted = Double.parseDouble(displayTextArea.getText());
+                    squarerooted = Math.sqrt(squarerooted);
+                    displayTextArea.setText(String.valueOf(squarerooted));
+                }
+                else
+                {
+                    squarerooted = Double.parseDouble(secondNum);
+                    squarerooted = Math.sqrt(squarerooted);
+                    secondNumLength = secondNum.length();
+                    secondNum = String.valueOf(squarerooted);
 
-                String current5 = otherDisplay.getText();
-                current5 = current5.substring(0,current5.length() - secondNumLength);
-                otherDisplay.setText(current5);
+                    String current5 = otherDisplay.getText();
+                    current5 = current5.substring(0,current5.length() - secondNumLength);
+                    otherDisplay.setText(current5);
 
-                otherDisplay.append(String.valueOf(squarerooted));
+                    otherDisplay.append(String.valueOf(squarerooted));
+                }
             }
         });
         buttonPnl.add(squareRoot);
@@ -166,7 +170,18 @@ public class Calculator extends JFrame
         carrot = new JButton("^");
         carrot.addActionListener((ActionEvent ae) ->
         {
-
+            if (firstNum)
+            {
+                carroting = true;
+                otherDisplay.append("^");
+                firstNum = false;
+            }
+            else
+            {
+                carroting = true;
+                otherDisplay.append("^");
+                carrotted = Double.parseDouble(secondNum);
+            }
         });
         buttonPnl.add(carrot);
 
@@ -351,7 +366,29 @@ public class Calculator extends JFrame
         switchSigns = new JButton("-/+");
         switchSigns.addActionListener((ActionEvent ae) ->
         {
+            if (firstNum)
+            {
+                if (!displayTextArea.getText().equals(""))
+                {
+                    switchedNum = Double.parseDouble(displayTextArea.getText());
+                    switchedNum = -switchedNum;
+                    displayTextArea.setText(String.valueOf(switchedNum));
+                }
+            }
+            else
+            {
+                if (!secondNum.equals(""))
+                {
+                    switchedNum = Double.parseDouble(secondNum);
+                    switchedNum = -switchedNum;
+                    secondNum = String.valueOf(switchedNum);
 
+                    String current9 = otherDisplay.getText();
+                    current9 = current9.substring(0,current9.length() - secondNum.length());
+                    otherDisplay.setText(current9);
+                    otherDisplay.append(String.valueOf(switchedNum));
+                }
+            }
         });
         buttonPnl.add(switchSigns);
 
@@ -392,8 +429,14 @@ public class Calculator extends JFrame
         add(main);
     }
 
-    public static void getAnswer()
+    public void getAnswer()
     {
+        if (carroting)
+        {
+            finalNum = Double.parseDouble(displayTextArea.getText());
+            finalNum = Math.pow(finalNum, Double.parseDouble(secondNum));
+            displayTextArea.setText(String.valueOf(finalNum));
+        }
         if (adding)
         {
             finalNum = Double.parseDouble(displayTextArea.getText()) + Double.parseDouble(secondNum);
@@ -430,21 +473,22 @@ public class Calculator extends JFrame
         }
     }
 
-    public static void reset()
+    public void reset()
     {
         adding = false;
         subtracting = false;
         multiplying = false;
         dividing = false;
-
+        carroting = false;
         firstNum = true;
-        secondNum = "";
 
+        secondNum = "";
         otherDisplay.setText("");
 
         squared = 0;
         squarerooted = 0;
         carrotted = 0;
         secondNumLength = 0;
+        switchedNum = 0;
     }
 }
