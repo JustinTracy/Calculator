@@ -51,7 +51,7 @@ public class Calculator extends JFrame
     private static double squared = 0;
     private static double inversed = 0;
     private static double squarerooted = 0;
-    private static double carrotted = 0;
+    private static String carrotted = "";
     double switchedNum = 0;
 
     private static int counter = 0;
@@ -85,7 +85,9 @@ public class Calculator extends JFrame
         blank = new JButton("");
         blank.addActionListener((ActionEvent ae) ->
         {
+            System.out.println("Carroted: " + carrotted);
             System.out.println("SecondNum: " + secondNum);
+            System.out.println("FinalNum: " + finalNum);
         });
         buttonPnl.add(blank);
 
@@ -180,7 +182,6 @@ public class Calculator extends JFrame
             {
                 carroting = true;
                 otherDisplay.append("^");
-                carrotted = Double.parseDouble(secondNum);
             }
         });
         buttonPnl.add(carrot);
@@ -198,6 +199,10 @@ public class Calculator extends JFrame
         {
             try
             {
+                if (carroting)
+                {
+                    carrotted = carrotted.substring(0,carrotted.length() - 1);
+                }
                 if (firstNum)
                 {
                     String current = displayTextArea.getText();
@@ -433,29 +438,68 @@ public class Calculator extends JFrame
     {
         if (carroting)
         {
-            finalNum = Double.parseDouble(displayTextArea.getText());
-            finalNum = Math.pow(finalNum, Double.parseDouble(secondNum));
-            displayTextArea.setText(String.valueOf(finalNum));
+            if (!adding && !subtracting && !multiplying && !dividing)
+            {
+                finalNum = Double.parseDouble(displayTextArea.getText());
+                finalNum = Math.pow(finalNum, Double.parseDouble(carrotted));
+                displayTextArea.setText(String.valueOf(finalNum));
+            }
+            else
+            {
+                finalNum = Math.pow(Double.parseDouble(secondNum), Double.parseDouble(carrotted));
+            }
         }
         if (adding)
         {
-            finalNum = Double.parseDouble(displayTextArea.getText()) + Double.parseDouble(secondNum);
-            displayTextArea.setText(String.valueOf(finalNum));
+            if (carroting)
+            {
+                finalNum = finalNum + Double.parseDouble(displayTextArea.getText());
+                displayTextArea.setText(String.valueOf(finalNum));
+            }
+            else
+            {
+                finalNum = Double.parseDouble(displayTextArea.getText()) + Double.parseDouble(secondNum);
+                displayTextArea.setText(String.valueOf(finalNum));
+            }
         }
         if (subtracting)
         {
-            finalNum = Double.parseDouble(displayTextArea.getText()) - Double.parseDouble(secondNum);
-            displayTextArea.setText(String.valueOf(finalNum));
+            if (carroting)
+            {
+                finalNum = Double.parseDouble(displayTextArea.getText()) - finalNum;
+                displayTextArea.setText(String.valueOf(finalNum));
+            }
+            else
+            {
+                finalNum = Double.parseDouble(displayTextArea.getText()) + Double.parseDouble(secondNum);
+                displayTextArea.setText(String.valueOf(finalNum));
+            }
         }
         if (multiplying)
         {
-            finalNum = Double.parseDouble(displayTextArea.getText()) * Double.parseDouble(secondNum);
-            displayTextArea.setText(String.valueOf(finalNum));
+            if (carroting)
+            {
+                finalNum = finalNum * Double.parseDouble(displayTextArea.getText());
+                displayTextArea.setText(String.valueOf(finalNum));
+            }
+            else
+            {
+                finalNum = Double.parseDouble(displayTextArea.getText()) + Double.parseDouble(secondNum);
+                displayTextArea.setText(String.valueOf(finalNum));
+            }
         }
         if (dividing)
         {
-            finalNum = Double.parseDouble(displayTextArea.getText()) / Double.parseDouble(secondNum);
-            displayTextArea.setText(String.valueOf(finalNum));
+            if (carroting)
+            {
+                finalNum = Double.parseDouble(displayTextArea.getText()) / finalNum;
+                displayTextArea.setText(String.valueOf(finalNum));
+            }
+            else
+            {
+                finalNum = Double.parseDouble(displayTextArea.getText()) + Double.parseDouble(secondNum);
+                displayTextArea.setText(String.valueOf(finalNum));
+            }
         }
         reset();
     }
@@ -468,8 +512,16 @@ public class Calculator extends JFrame
         }
         else
         {
-            otherDisplay.append(String.valueOf(num));
-            secondNum = secondNum + num;
+            if (carroting)
+            {
+                otherDisplay.append(String.valueOf(num));
+                carrotted = carrotted + num;
+            }
+            else
+            {
+                otherDisplay.append(String.valueOf(num));
+                secondNum = secondNum + num;
+            }
         }
     }
 
@@ -487,7 +539,7 @@ public class Calculator extends JFrame
 
         squared = 0;
         squarerooted = 0;
-        carrotted = 0;
+        carrotted = "";
         secondNumLength = 0;
         switchedNum = 0;
     }
