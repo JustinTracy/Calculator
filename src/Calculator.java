@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -56,6 +58,14 @@ public class Calculator extends JFrame
 
     private static int counter = 0;
 
+    Border border = new LineBorder(Color.BLACK, 2);
+    Font buttonFont = new Font("Arial", Font.BOLD, 24);
+    Color operatorColor = new Color(28, 76, 100);
+    Color numberColor = new Color(255, 255, 255);
+    Color removeColor = new Color(131, 15, 35);
+    Color equalsColor = new Color(162, 118, 31);
+    Color otherColor = new Color(23, 99, 59);
+    Color textColor = new Color(1, 1, 1);
 
     public Calculator()
     {
@@ -69,7 +79,7 @@ public class Calculator extends JFrame
         otherDisplay.setEditable(false);
         otherDisplay.setFont(new Font("Arial", Font.PLAIN, 24));
         otherDisplay.setPreferredSize(new Dimension(100, 25));
-        otherDisplay.setBackground(Color.WHITE);
+        otherDisplay.setBackground(Color.LIGHT_GRAY);
         displayPnl.add(otherDisplay);
         displayTextArea = new JTextArea();
         displayTextArea.setPreferredSize(new Dimension(100, 50));
@@ -83,15 +93,21 @@ public class Calculator extends JFrame
         buttonPnl = new JPanel();
         buttonPnl.setLayout(new GridLayout(6, 4));
         blank = new JButton("");
+        blank.setBorder(border);
+        blank.setFont(buttonFont);
+        blank.setBackground(otherColor);
+        blank.setForeground(textColor);
         blank.addActionListener((ActionEvent ae) ->
         {
-            System.out.println("Carroted: " + carrotted);
-            System.out.println("SecondNum: " + secondNum);
-            System.out.println("FinalNum: " + finalNum);
+
         });
         buttonPnl.add(blank);
 
         squareRoot = new JButton("√");
+        squareRoot.setBorder(border);
+        squareRoot.setFont(buttonFont);
+        squareRoot.setBackground(otherColor);
+        squareRoot.setForeground(textColor);
         squareRoot.addActionListener((ActionEvent ae) ->
         {
             if (!displayTextArea.getText().equals(""))
@@ -120,6 +136,10 @@ public class Calculator extends JFrame
         buttonPnl.add(squareRoot);
 
         square = new JButton("x^2");
+        square.setBackground(otherColor);
+        square.setBorder(border);
+        square.setFont(buttonFont);
+        square.setForeground(textColor);
         square.addActionListener((ActionEvent ae) ->
         {
             if (firstNum)
@@ -145,6 +165,10 @@ public class Calculator extends JFrame
         buttonPnl.add(square);
 
         inverse = new JButton("1/x");
+        inverse.setBackground(otherColor);
+        inverse.setBorder(border);
+        inverse.setFont(buttonFont);
+        inverse.setForeground(textColor);
         inverse.addActionListener((ActionEvent ae) ->
         {
             if (firstNum)
@@ -170,6 +194,10 @@ public class Calculator extends JFrame
         buttonPnl.add(inverse);
 
         carrot = new JButton("^");
+        carrot.setBackground(otherColor);
+        carrot.setBorder(border);
+        carrot.setFont(buttonFont);
+        carrot.setForeground(textColor);
         carrot.addActionListener((ActionEvent ae) ->
         {
             if (firstNum)
@@ -187,6 +215,10 @@ public class Calculator extends JFrame
         buttonPnl.add(carrot);
 
         clear = new JButton("Clear");
+        clear.setBackground(removeColor);
+        clear.setBorder(border);
+        clear.setFont(buttonFont);
+        clear.setForeground(textColor);
         clear.addActionListener((ActionEvent ae) ->
         {
             reset();
@@ -194,7 +226,11 @@ public class Calculator extends JFrame
         });
         buttonPnl.add(clear);
 
-        backspace = new JButton("<-");
+        backspace = new JButton("Back");
+        backspace.setBackground(removeColor);
+        backspace.setBorder(border);
+        backspace.setFont(buttonFont);
+        backspace.setForeground(textColor);
         backspace.addActionListener((ActionEvent ae) ->
         {
             try
@@ -226,6 +262,10 @@ public class Calculator extends JFrame
         buttonPnl.add(backspace);
 
         divide = new JButton("/");
+        divide.setBackground(operatorColor);
+        divide.setBorder(border);
+        divide.setFont(buttonFont);
+        divide.setForeground(textColor);
         divide.addActionListener((ActionEvent ae) ->
         {
             counter++;
@@ -246,6 +286,11 @@ public class Calculator extends JFrame
         buttonPnl.add(divide);
 
         seven = new JButton("7");
+        seven.setBackground(numberColor);
+        seven.setBorder(border);
+        seven.setFont(buttonFont);
+        seven.setBackground(Color.LIGHT_GRAY);
+        seven.setForeground(textColor);
         seven.addActionListener((ActionEvent ae) ->
         {
             setButtonNumber(7);
@@ -253,6 +298,11 @@ public class Calculator extends JFrame
         buttonPnl.add(seven);
 
         eight = new JButton("8");
+        eight.setBackground(numberColor);
+        eight.setBorder(border);
+        eight.setFont(buttonFont);
+        eight.setBackground(Color.LIGHT_GRAY);
+        eight.setForeground(textColor);
         eight.addActionListener((ActionEvent ae) ->
         {
             setButtonNumber(8);
@@ -260,6 +310,11 @@ public class Calculator extends JFrame
         buttonPnl.add(eight);
 
         nine = new JButton("9");
+        nine.setBackground(numberColor);
+        nine.setBorder(border);
+        nine.setFont(buttonFont);
+        nine.setBackground(Color.LIGHT_GRAY);
+        nine.setForeground(textColor);
         nine.addActionListener((ActionEvent ae) ->
         {
             setButtonNumber(9);
@@ -267,6 +322,10 @@ public class Calculator extends JFrame
         buttonPnl.add(nine);
 
         multiply = new JButton("*");
+        multiply.setBackground(operatorColor);
+        multiply.setBorder(border);
+        multiply.setFont(buttonFont);
+        multiply.setForeground(textColor);
         multiply.addActionListener((ActionEvent ae) ->
         {
             counter++;
@@ -287,6 +346,11 @@ public class Calculator extends JFrame
         buttonPnl.add(multiply);
 
         four = new JButton("4");
+        four.setBackground(numberColor);
+        four.setBorder(border);
+        four.setFont(buttonFont);
+        four.setBackground(Color.LIGHT_GRAY);
+        four.setForeground(textColor);
         four.addActionListener((ActionEvent ae) ->
         {
             setButtonNumber(4);
@@ -294,6 +358,11 @@ public class Calculator extends JFrame
         buttonPnl.add(four);
 
         five = new JButton("5");
+        five.setBackground(numberColor);
+        five.setBorder(border);
+        five.setFont(buttonFont);
+        five.setBackground(Color.LIGHT_GRAY);
+        five.setForeground(textColor);
         five.addActionListener((ActionEvent ae) ->
         {
             setButtonNumber(5);
@@ -301,6 +370,11 @@ public class Calculator extends JFrame
         buttonPnl.add(five);
 
         six = new JButton("6");
+        six.setBackground(numberColor);
+        six.setBorder(border);
+        six.setFont(buttonFont);
+        six.setBackground(Color.LIGHT_GRAY);
+        six.setForeground(textColor);
         six.addActionListener((ActionEvent ae) ->
         {
             setButtonNumber(6);
@@ -308,6 +382,10 @@ public class Calculator extends JFrame
         buttonPnl.add(six);
 
         minus = new JButton("-");
+        minus.setBackground(operatorColor);
+        minus.setBorder(border);
+        minus.setFont(buttonFont);
+        minus.setForeground(textColor);
         minus.addActionListener((ActionEvent ae) ->
         {
             counter++;
@@ -328,6 +406,11 @@ public class Calculator extends JFrame
         buttonPnl.add(minus);
 
         one = new JButton("1");
+        one.setBackground(numberColor);
+        one.setBorder(border);
+        one.setFont(buttonFont);
+        one.setBackground(Color.LIGHT_GRAY);
+        one.setForeground(textColor);
         one.addActionListener((ActionEvent ae) ->
         {
             setButtonNumber(1);
@@ -335,6 +418,11 @@ public class Calculator extends JFrame
         buttonPnl.add(one);
 
         two = new JButton("2");
+        two.setBackground(numberColor);
+        two.setBorder(border);
+        two.setFont(buttonFont);
+        two.setBackground(Color.LIGHT_GRAY);
+        two.setForeground(textColor);
         two.addActionListener((ActionEvent ae) ->
         {
             setButtonNumber(2);
@@ -342,6 +430,11 @@ public class Calculator extends JFrame
         buttonPnl.add(two);
 
         three = new JButton("3");
+        three.setBackground(numberColor);
+        three.setBorder(border);
+        three.setFont(buttonFont);
+        three.setBackground(Color.LIGHT_GRAY);
+        three.setForeground(textColor);
         three.addActionListener((ActionEvent ae) ->
         {
             setButtonNumber(3);
@@ -349,6 +442,10 @@ public class Calculator extends JFrame
         buttonPnl.add(three);
 
         plus = new JButton("+");
+        plus.setBackground(operatorColor);
+        plus.setBorder(border);
+        plus.setFont(buttonFont);
+        plus.setForeground(textColor);
         plus.addActionListener((ActionEvent ae) ->
         {
             counter++;
@@ -369,6 +466,10 @@ public class Calculator extends JFrame
         buttonPnl.add(plus);
 
         switchSigns = new JButton("-/+");
+        switchSigns.setBackground(otherColor);
+        switchSigns.setBorder(border);
+        switchSigns.setFont(buttonFont);
+        switchSigns.setForeground(textColor);
         switchSigns.addActionListener((ActionEvent ae) ->
         {
             if (firstNum)
@@ -398,6 +499,11 @@ public class Calculator extends JFrame
         buttonPnl.add(switchSigns);
 
         zero = new JButton("0");
+        zero.setBackground(numberColor);
+        zero.setBorder(border);
+        zero.setFont(buttonFont);
+        zero.setBackground(Color.LIGHT_GRAY);
+        zero.setForeground(textColor);
         zero.addActionListener((ActionEvent ae) ->
         {
             setButtonNumber(0);
@@ -405,6 +511,10 @@ public class Calculator extends JFrame
         buttonPnl.add(zero);
 
         decimal = new JButton(".");
+        decimal.setBackground(otherColor);
+        decimal.setBorder(border);
+        decimal.setFont(buttonFont);
+        decimal.setForeground(textColor);
         decimal.addActionListener((ActionEvent ae) ->
         {
             if (firstNum)
@@ -420,6 +530,10 @@ public class Calculator extends JFrame
         buttonPnl.add(decimal);
 
         equals = new JButton("=");
+        equals.setBackground(equalsColor);
+        equals.setBorder(border);
+        equals.setFont(buttonFont);
+        equals.setForeground(textColor);
         equals.addActionListener((ActionEvent ae) ->
         {
             getAnswer();
@@ -471,7 +585,7 @@ public class Calculator extends JFrame
             }
             else
             {
-                finalNum = Double.parseDouble(displayTextArea.getText()) + Double.parseDouble(secondNum);
+                finalNum = Double.parseDouble(displayTextArea.getText()) - Double.parseDouble(secondNum);
                 displayTextArea.setText(String.valueOf(finalNum));
             }
         }
@@ -484,7 +598,7 @@ public class Calculator extends JFrame
             }
             else
             {
-                finalNum = Double.parseDouble(displayTextArea.getText()) + Double.parseDouble(secondNum);
+                finalNum = Double.parseDouble(displayTextArea.getText()) * Double.parseDouble(secondNum);
                 displayTextArea.setText(String.valueOf(finalNum));
             }
         }
@@ -497,7 +611,7 @@ public class Calculator extends JFrame
             }
             else
             {
-                finalNum = Double.parseDouble(displayTextArea.getText()) + Double.parseDouble(secondNum);
+                finalNum = Double.parseDouble(displayTextArea.getText()) / Double.parseDouble(secondNum);
                 displayTextArea.setText(String.valueOf(finalNum));
             }
         }
